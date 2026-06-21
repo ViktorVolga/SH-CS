@@ -19,13 +19,26 @@ type ServerConfig struct {
 }
 
 type LoggerSettings struct {
-	LogPath string `json:"sh-cs-log-path`
+	LogPath string `json:"sh-cs-log-path"`
+}
+
+type PostgresSettings struct {
+	PostgresAddress Address `json:"address"`
+	User            string  `json:"user"`
+	Password        string  `json:"password"`
+	DtbName         string  `json:"dtbName"`
+}
+
+type KafkaSettings struct {
+	KafkaAddress Address `json:"address"`
 }
 
 type Config struct {
-	Redis  Address        `json:"redis"`
-	Logger LoggerSettings `json:"loger"`
-	Server ServerConfig   `json:"server"`
+	Redis    Address          `json:"redis"`
+	Logger   LoggerSettings   `json:"loger"`
+	Server   ServerConfig     `json:"server"`
+	Postgres PostgresSettings `json:"postgres"`
+	Kafka    KafkaSettings    `json:"kafka"`
 }
 
 func ReadConfig(path string) (*Config, error) {
@@ -53,6 +66,11 @@ func SaveEmptyConfig(path string) (*Config, error) {
 	config.Server.SertPath = ""
 	config.Server.ServerAddress.Ip = ""
 	config.Server.ServerAddress.Port = ""
+	config.Postgres.PostgresAddress.Ip = ""
+	config.Postgres.PostgresAddress.Port = ""
+	config.Postgres.Password = ""
+	config.Kafka.KafkaAddress.Ip = ""
+	config.Kafka.KafkaAddress.Port = ""
 
 	jsonData, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {

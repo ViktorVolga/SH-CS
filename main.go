@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"sh-cs/config"
+	"sh-cs/server"
 )
 
 func main() {
@@ -12,4 +13,5 @@ func main() {
 		println("error while reading/creating config: %s", err)
 	}
 	println("cfg:", cfg.Redis.Ip)
+	server.RunServer()
 }
